@@ -1,5 +1,5 @@
 name: dealerware_flutter_use_cases
-description: "A new Flutter project."
+description: "Flutter demo: REST + GraphQL + WebSockets with CI/CD (Actions, Jenkins+Fastlane, Codemagic)."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -8,15 +8,12 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.9.2
+  sdk: ">=3.9.0 <4.0.0"
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
 
   ## State Management
   flutter_riverpod: 3.0.3
@@ -24,15 +21,19 @@ dependencies:
   dio: 5.9.0
   ## GraphQL
   graphql_flutter: 5.2.1
+  
+  ## JSON
+  json_annotation: 4.9.0
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^5.0.0
+  flutter_lints: 5.0.0
   ## Code Generation
-  build_runner: 2.9.0
-  graphql_codegen: 3.0.0
+  graphql_codegen: 2.0.0
+  build_runner: 2.7.1
   json_serializable: 6.11.1
 
 # The following section is specific to Flutter packages.
