@@ -1,0 +1,56 @@
+# Misc
+*.log
+*.lock
+*.tmp
+*.swp
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.pub-cache/
+build/
+flutter_*.png
+
+# Android related
+**/android/local.properties
+**/android/.gradle/
+**/android/app/build/
+**/android/key.properties
+
+# iOS related
+**/ios/Flutter/.last_build_id
+**/ios/Pods/
+**/ios/Runner.xcworkspace/
+**/ios/build/
+**/ios/.symlinks/
+**/ios/GeneratedPluginRegistrant.*
+
+# Web related
+**/web/.dart_tool/
+**/web/build/
+
+# Windows, macOS, Linux builds
+**/windows/
+**/macos/
+**/linux/
+
+# Coverage
+coverage/
+
+# Test outputs
+test_output/
+
+# Environment files
+.env
+.env.*
+
+# Firebase / secrets
+google-services.json
+GoogleService-Info.plist
+
+# Symbolication / crash reports
+app.*.symbols
