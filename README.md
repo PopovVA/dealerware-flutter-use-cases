@@ -1,3 +1,5 @@
+[![Codemagic build status](https://api.codemagic.io/apps/68f5642276e25aaf7e9940b6/68f5642276e25aaf7e9940b5/status_badge.svg)](https://codemagic.io/app/68f5642276e25aaf7e9940b6/68f5642276e25aaf7e9940b5/latest_build)
+
 # Dealerware Flutter Use Cases
 
 A Flutter demo project showcasing **REST**, **GraphQL**, and **WebSocket** integrations with multiple CI/CD pipelines.
