@@ -47,4 +47,11 @@ Each pipeline automates build, test, and release:
 
 ---
 
+## Out of scope
+
+Localization
+Naviigation
+Cache
+
+
 Created by Vadim Popov
