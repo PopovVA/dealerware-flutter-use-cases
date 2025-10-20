@@ -59,10 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDMCcPtSCZcNo1Z_C3L1-gjscns-jAqNX0',
-    appId: '1:827294350591:ios:8ba13a61797e6253a360ca',
+    appId: '1:827294350591:ios:bc81fc184cc516aaa360ca',
     messagingSenderId: '827294350591',
     projectId: 'dealerware-flutter-use-cases',
     storageBucket: 'dealerware-flutter-use-cases.firebasestorage.app',
-    iosBundleId: 'com.example.dealerwareFlutterUseCases.RunnerTests',
+    iosBundleId: 'com.vadimpopov.dealerware-flutter-use-cases',
   );
 }
