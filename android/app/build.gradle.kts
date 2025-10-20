@@ -37,7 +37,7 @@ android {
 
     signingConfigs {
         create("release") {
-            val keystorePropertiesFile = rootProject.file("android/key.properties")
+            val keystorePropertiesFile = rootProject.file("key.properties")
             val keystoreProperties = Properties()
             if (keystorePropertiesFile.exists()) {
                 println("✅ Found keystore properties file: ${keystorePropertiesFile.absolutePath}")
