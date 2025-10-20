@@ -40,7 +40,14 @@ android {
             val keystorePropertiesFile = rootProject.file("android/key.properties")
             val keystoreProperties = Properties()
             if (keystorePropertiesFile.exists()) {
+                println("✅ Found keystore properties file: ${keystorePropertiesFile.absolutePath}")
                 keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
+                if (keystoreProperties["storeFile"] == null) println("⚠️ Missing storeFile in key.properties")
+                if (keystoreProperties["storePassword"] == null) println("⚠️ Missing storePassword in key.properties")
+                if (keystoreProperties["keyAlias"] == null) println("⚠️ Missing keyAlias in key.properties")
+                if (keystoreProperties["keyPassword"] == null) println("⚠️ Missing keyPassword in key.properties")
+            } else {
+                println("⚠️ Keystore properties file not found at: ${keystorePropertiesFile.absolutePath}")
             }
 
             storeFile = file(keystoreProperties["storeFile"] ?: "upload-keystore.jks")
