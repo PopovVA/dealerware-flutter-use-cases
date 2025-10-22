@@ -1,6 +1,7 @@
+// ignore: file_names
 import 'package:json_annotation/json_annotation.dart';
 
-part 'dealership_DTO.g.dart';
+part 'dealership_dto.g.dart';
 
 // {
 //   "createdAt": "2025-10-22T09:13:01.889Z",
