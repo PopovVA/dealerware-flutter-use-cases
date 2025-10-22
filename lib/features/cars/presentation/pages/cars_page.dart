@@ -29,6 +29,13 @@ class CarsPage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // TODO: Add new car logic
+        },
+        tooltip: 'Add Car',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

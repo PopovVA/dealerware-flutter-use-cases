@@ -22,7 +22,7 @@ class GraphQLClient extends RequestClient {
   gql.GraphQLClient get client => _client;
 
   @override
-  Future<T> send<T>(Request<T> request) async {
+  Future<T> send<T>(AppRequest<T> request) async {
     if (request.type is! GraphQLRequest) {
       throw ArgumentError('GraphQLClient requires GraphQLRequest type');
     }
@@ -75,7 +75,7 @@ class GraphQLClient extends RequestClient {
   }
 
   /// Stream-based method for GraphQL subscriptions
-  Stream<T> subscribeToRequest<T>(Request<T> request) {
+  Stream<T> subscribeToRequest<T>(AppRequest<T> request) {
     if (request.type is! GraphQLRequest) {
       throw ArgumentError('GraphQLClient requires GraphQLRequest type');
     }

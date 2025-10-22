@@ -19,7 +19,7 @@ final class GraphQLRequest extends RequestType {
 
 enum GraphQLOperation { query, mutation, subscription }
 
-final class Request<T> {
+final class AppRequest<T> {
   /// Request type (REST or GraphQL)
   final RequestType type;
 
@@ -39,7 +39,7 @@ final class Request<T> {
   /// Additional headers
   final Map<String, String>? headers;
 
-  const Request({
+  const AppRequest({
     required this.type,
     required this.operation,
     this.params,
@@ -48,13 +48,13 @@ final class Request<T> {
   });
 
   /// Factory for REST requests
-  factory Request.rest({
+  factory AppRequest.rest({
     required RestMethod method,
     required String endpoint,
     Map<String, dynamic>? params,
     Map<String, String>? headers,
   }) {
-    return Request(
+    return AppRequest(
       type: RestRequest(method),
       operation: endpoint,
       params: params,
@@ -63,14 +63,14 @@ final class Request<T> {
   }
 
   /// Factory for GraphQL requests
-  factory Request.graphql({
+  factory AppRequest.graphql({
     required GraphQLOperation operation,
     required String query,
     String? operationName,
     Map<String, dynamic>? variables,
     Map<String, String>? headers,
   }) {
-    return Request(
+    return AppRequest(
       type: GraphQLRequest(operation),
       operation: operationName ?? 'GraphQLOperation',
       query: query,
@@ -88,5 +88,5 @@ abstract class RequestClient {
 
   RequestClient({required this.baseUrl});
 
-  Future<T> send<T>(Request<T> request);
+  Future<T> send<T>(AppRequest<T> request);
 }

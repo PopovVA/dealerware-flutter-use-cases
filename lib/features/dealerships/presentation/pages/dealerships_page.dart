@@ -32,6 +32,13 @@ class DealershipsPage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // TODO: Add new dealership logic
+        },
+        tooltip: 'Add Dealership',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

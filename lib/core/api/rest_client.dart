@@ -22,7 +22,7 @@ class RestClient extends RequestClient {
   Dio get dio => _dio;
 
   @override
-  Future<T> send<T>(Request<T> request) async {
+  Future<T> send<T>(AppRequest<T> request) async {
     if (request.type is! RestRequest) {
       throw ArgumentError('RestClient requires RestRequest type');
     }
