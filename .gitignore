@@ -1,3 +1,6 @@
+*.b64
+*firebase-adminsdk-fbsvc-*.json
+
 # Misc
 *.log
 *.lock

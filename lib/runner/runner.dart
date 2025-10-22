@@ -1,0 +1,32 @@
+import 'dart:async';
+
+import 'package:dealerware_flutter_use_cases/firebase_options.dart';
+import 'package:dealerware_flutter_use_cases/runner/app.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+
+class Runner {
+  static Future<void> run() async {
+    await runZonedGuarded(
+      () async {
+        await initFlutterDependencies();
+        runFlutterApp();
+      },
+      (error, stack) {
+        print(error);
+        print(stack);
+      },
+    );
+  }
+
+  static Future<void> runFlutterApp() async {
+    runApp(const MyApp());
+  }
+
+  static Future<void> initFlutterDependencies() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+}
