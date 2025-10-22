@@ -1,13 +1,14 @@
+import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 import 'package:dealerware_flutter_use_cases/core/utils/date_formatter.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/dealership_DTO.dart';
-import 'package:intl/intl.dart';
 
 /// Coordinates value object for UI convenience
-class Coordinates {
+class CoordinatesEntity extends Equatable {
   final double latitude;
   final double longitude;
 
-  const Coordinates({required this.latitude, required this.longitude});
+  const CoordinatesEntity({required this.latitude, required this.longitude});
 
   /// Format coordinates for display
   String get formatted =>
@@ -17,26 +18,18 @@ class Coordinates {
   String get mapsUrl => 'https://www.google.com/maps?q=$latitude,$longitude';
 
   @override
+  List<Object?> get props => [latitude, longitude];
+
+  @override
   String toString() => formatted;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Coordinates &&
-          runtimeType == other.runtimeType &&
-          latitude == other.latitude &&
-          longitude == other.longitude;
-
-  @override
-  int get hashCode => latitude.hashCode ^ longitude.hashCode;
 }
 
 /// Domain entity for Dealership - UI-friendly representation
-class DealershipEntity {
+class DealershipEntity extends Equatable {
   final String id;
   final String name;
   final String address;
-  final Coordinates coordinates;
+  final CoordinatesEntity coordinates;
   final String formattedDate;
   final DateTime createdAt;
 
@@ -55,7 +48,7 @@ class DealershipEntity {
       id: dto.id,
       name: dto.name,
       address: dto.address,
-      coordinates: Coordinates(
+      coordinates: CoordinatesEntity(
         latitude: dto.latitude,
         longitude: dto.longitude,
       ),
@@ -76,7 +69,7 @@ class DealershipEntity {
     String? id,
     String? name,
     String? address,
-    Coordinates? coordinates,
+    CoordinatesEntity? coordinates,
     String? formattedDate,
     DateTime? createdAt,
   }) {
@@ -91,15 +84,8 @@ class DealershipEntity {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DealershipEntity &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+  List<Object?> get props => [id, name, address, coordinates, createdAt];
 
   @override
-  int get hashCode => id.hashCode;
-
-  @override
-  String toString() => 'DealershipEntity(id: $id, name: $name)';
+  bool get stringify => true;
 }
