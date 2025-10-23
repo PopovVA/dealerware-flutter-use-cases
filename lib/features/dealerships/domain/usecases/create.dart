@@ -1,4 +1,5 @@
 import 'package:dealerware_flutter_use_cases/core/usecase/usecase.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/dealerships_dto.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/dealerships_repository.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/entities/dealership_entity.dart';
 
@@ -29,12 +30,7 @@ class CreateDealership
 
   @override
   Future<DealershipEntity> call(CreateDealershipParams params) async {
-    final dto = await repository.create(
-      name: params.name,
-      address: params.address,
-      latitude: params.latitude,
-      longitude: params.longitude,
-    );
+    final dto = await repository.create(params.toCreateRequestDTO());
     return DealershipEntity.fromDTO(dto);
   }
 }

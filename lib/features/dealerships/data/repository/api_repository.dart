@@ -1,6 +1,8 @@
 import 'package:dealerware_flutter_use_cases/core/api/request_client.dart';
 import 'package:dealerware_flutter_use_cases/core/api/rest_client.dart';
-import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/response_dto.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/request/create_request_dto.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/response/response_dto.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/request/update_request_dto.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/dealerships_repository.dart';
 
 class ApiDealershipsRepository implements IDealershipsRepository {
@@ -9,12 +11,14 @@ class ApiDealershipsRepository implements IDealershipsRepository {
   ApiDealershipsRepository({required this.restClient});
 
   @override
-  Future<DealershipResponseDTO> create(DealershipResponseDTO dealership) async {
+  Future<DealershipResponseDTO> create(
+    DealershipCreateRequestDTO newDealership,
+  ) async {
     try {
       final request = AppRequest<DealershipResponseDTO>.rest(
         method: RestMethod.post,
         endpoint: '/dealerships',
-        params: dealership.toJson(),
+        params: newDealership.toJson(),
       );
       return await restClient.send<DealershipResponseDTO>(request);
     } catch (e) {
@@ -62,12 +66,14 @@ class ApiDealershipsRepository implements IDealershipsRepository {
   }
 
   @override
-  Future<DealershipResponseDTO> update(DealershipResponseDTO dealership) async {
+  Future<DealershipResponseDTO> update(
+    DealershipUpdateRequestDTO updatedDealership,
+  ) async {
     try {
       final request = AppRequest<DealershipResponseDTO>.rest(
         method: RestMethod.put,
-        endpoint: '/dealerships/${dealership.id}',
-        params: dealership.toJson(),
+        endpoint: '/dealerships/${updatedDealership.id}',
+        params: updatedDealership.toJson(),
       );
       return await restClient.send<DealershipResponseDTO>(request);
     } catch (e) {

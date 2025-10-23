@@ -1,4 +1,4 @@
-import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/response_dto.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/response/response_dto.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:dealerware_flutter_use_cases/core/utils/date_formatter.dart';

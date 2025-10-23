@@ -1,4 +1,4 @@
-import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/response_dto.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/dealerships_dto.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/dealerships_repository.dart';
 
 class CacheDealershipsRepository implements IDealershipsRepository {
@@ -9,7 +9,7 @@ class CacheDealershipsRepository implements IDealershipsRepository {
   // CacheDealershipsRepository({required this.cacheClient});
 
   @override
-  Future<DealershipResponseDTO> create(DealershipResponseDTO dealership) {
+  Future<DealershipResponseDTO> create(DealershipCreateRequestDTO dealership) {
     // TODO: implement create
     throw UnimplementedError();
   }
@@ -33,7 +33,7 @@ class CacheDealershipsRepository implements IDealershipsRepository {
   }
 
   @override
-  Future<DealershipResponseDTO> update(DealershipResponseDTO dealership) {
+  Future<DealershipResponseDTO> update(DealershipUpdateRequestDTO dealership) {
     // TODO: implement update
     throw UnimplementedError();
   }
