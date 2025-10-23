@@ -2,23 +2,24 @@ import 'package:dealerware_flutter_use_cases/core/usecase/usecase.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/dealerships_repository.dart';
 
 /// Parameters for deleting a dealership
-class DeleteDealershipParams extends IUseCaseParams {
+class DeleteOneByIdDealershipParams extends IUseCaseParams {
   final String id;
 
-  const DeleteDealershipParams(this.id);
+  const DeleteOneByIdDealershipParams(this.id);
 
   @override
   List<Object?> get props => [id];
 }
 
 /// Use case for deleting a dealership
-class DeleteDealership implements IUseCase<void, DeleteDealershipParams> {
+class DeleteOneByIdDealership
+    implements IUseCase<void, DeleteOneByIdDealershipParams> {
   final IDealershipsRepository repository;
 
-  const DeleteDealership(this.repository);
+  const DeleteOneByIdDealership(this.repository);
 
   @override
-  Future<void> call(DeleteDealershipParams params) async {
+  Future<void> call(DeleteOneByIdDealershipParams params) async {
     return await repository.delete(params.id);
   }
 }

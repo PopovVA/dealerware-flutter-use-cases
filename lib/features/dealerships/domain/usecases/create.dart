@@ -1,5 +1,5 @@
 import 'package:dealerware_flutter_use_cases/core/usecase/usecase.dart';
-import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/dealerships_dto.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/request/params_to_dto_extensions.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/dealerships_repository.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/entities/dealership_entity.dart';
 

@@ -1,4 +1,4 @@
-import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/dealerships_dto.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/dto.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/dealerships_repository.dart';
 
 class CacheDealershipsRepository implements IDealershipsRepository {
