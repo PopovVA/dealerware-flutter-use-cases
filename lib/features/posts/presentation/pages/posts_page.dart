@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CarsPage extends StatelessWidget {
-  const CarsPage({super.key});
+class PostsPage extends StatelessWidget {
+  const PostsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cars GraphQL'),
+        title: const Text('Posts GraphQL'),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
       body: Center(
@@ -15,15 +15,15 @@ class CarsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.directions_car,
+              Icons.article,
               size: 100,
               color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(height: 20),
-            Text('Cars', style: Theme.of(context).textTheme.headlineMedium),
+            Text('Posts', style: Theme.of(context).textTheme.headlineMedium),
             const SizedBox(height: 10),
             Text(
-              'Here will be a list of cars',
+              'Here will be a list of posts',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
@@ -31,9 +31,9 @@ class CarsPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: Add new car logic
+          // TODO: Add new post logic
         },
-        tooltip: 'Add Car',
+        tooltip: 'Add Post',
         child: const Icon(Icons.add),
       ),
     );

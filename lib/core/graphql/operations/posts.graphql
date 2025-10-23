@@ -1,0 +1,75 @@
+# Fragment for Post fields
+fragment PostFields on Post {
+  id
+  title
+  body
+  user {
+    id
+    name
+    email
+  }
+}
+
+# Query: Get all posts with pagination
+query GetPosts($options: PageQueryOptions) {
+  posts(options: $options) {
+    data {
+      ...PostFields
+    }
+    meta {
+      totalCount
+    }
+    links {
+      first {
+        page
+        limit
+      }
+      prev {
+        page
+        limit
+      }
+      next {
+        page
+        limit
+      }
+      last {
+        page
+        limit
+      }
+    }
+  }
+}
+
+# Query: Get single post by ID
+query GetPost($id: ID!) {
+  post(id: $id) {
+    ...PostFields
+    comments(options: { paginate: { page: 1, limit: 10 } }) {
+      data {
+        id
+        name
+        email
+        body
+      }
+    }
+  }
+}
+
+# Mutation: Create new post
+mutation CreatePost($input: CreatePostInput!) {
+  createPost(input: $input) {
+    ...PostFields
+  }
+}
+
+# Mutation: Update existing post
+mutation UpdatePost($id: ID!, $input: UpdatePostInput!) {
+  updatePost(id: $id, input: $input) {
+    ...PostFields
+  }
+}
+
+# Mutation: Delete post
+mutation DeletePost($id: ID!) {
+  deletePost(id: $id)
+}
