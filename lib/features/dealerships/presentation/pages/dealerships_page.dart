@@ -1,4 +1,5 @@
 import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/components/dealership_card.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/pages/detailed_dealership_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/di/dealerships_providers.dart';
@@ -41,9 +42,7 @@ class _DealershipsPageState extends ConsumerState<DealershipsPage> {
       ),
       body: _buildBody(context, state, notifier),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: Navigate to create dealership page
-        },
+        onPressed: () => _navigateToCreatePage(context),
         tooltip: 'Add Dealership',
         child: const Icon(Icons.add),
       ),
@@ -169,6 +168,7 @@ class _DealershipsPageState extends ConsumerState<DealershipsPage> {
           return DealershipCard(
             dealership: dealership,
             onDelete: () => _showDeleteDialog(context, dealership, notifier),
+            onTap: () => _navigateToEditPage(context, dealership.id),
           );
         },
       ),
@@ -194,6 +194,9 @@ class _DealershipsPageState extends ConsumerState<DealershipsPage> {
           onDelete: isDeleting
               ? null
               : () => _showDeleteDialog(context, dealership, notifier),
+          onTap: isDeleting
+              ? null
+              : () => _navigateToEditPage(context, dealership.id),
         );
       },
     );
@@ -269,6 +272,30 @@ class _DealershipsPageState extends ConsumerState<DealershipsPage> {
 
     if (confirmed == true && mounted) {
       await notifier.deleteOneById(dealership.id);
+    }
+  }
+
+  Future<void> _navigateToCreatePage(BuildContext context) async {
+    final result = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(builder: (context) => const DetailedDealershipPage()),
+    );
+
+    // Refresh list if dealership was created
+    if (result == true && mounted) {
+      ref.read(dealershipsListNotifierProvider.notifier).refresh();
+    }
+  }
+
+  Future<void> _navigateToEditPage(BuildContext context, String id) async {
+    final result = await Navigator.of(context).push<bool>(
+      MaterialPageRoute(
+        builder: (context) => DetailedDealershipPage(dealershipId: id),
+      ),
+    );
+
+    // Refresh list if dealership was updated
+    if (result == true && mounted) {
+      ref.read(dealershipsListNotifierProvider.notifier).refresh();
     }
   }
 }

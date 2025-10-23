@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class DealershipCard extends StatelessWidget {
   final DealershipEntity dealership;
   final VoidCallback? onDelete;
+  final VoidCallback? onTap;
   final bool isDeleting;
 
   const DealershipCard({
     super.key,
     required this.dealership,
     this.onDelete,
+    this.onTap,
     this.isDeleting = false,
   });
 
@@ -95,9 +97,7 @@ class DealershipCard extends StatelessWidget {
                 ),
                 onPressed: onDelete,
               ),
-        onTap: () {
-          // TODO: Navigate to detail page
-        },
+        onTap: onTap,
       ),
     );
   }
