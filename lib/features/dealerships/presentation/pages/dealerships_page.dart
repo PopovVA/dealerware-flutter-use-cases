@@ -18,14 +18,14 @@ class _DealershipsPageState extends ConsumerState<DealershipsPage> {
     super.initState();
     // Load dealerships on page init
     Future.microtask(() {
-      ref.read(dealershipsListNotifierProvider).getAll();
+      ref.read(dealershipsListNotifierProvider.notifier).getAll();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final notifier = ref.read(dealershipsListNotifierProvider);
-    final state = ref.watch(dealershipsListStateProvider);
+    final notifier = ref.read(dealershipsListNotifierProvider.notifier);
+    final state = ref.watch(dealershipsListNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(

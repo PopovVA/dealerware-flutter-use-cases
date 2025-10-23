@@ -10,7 +10,11 @@ class GetDealerships implements IUseCaseNoParams<List<DealershipEntity>> {
 
   @override
   Future<List<DealershipEntity>> call() async {
-    final dto = await repository.getAll();
-    return dto.map(DealershipEntity.fromDTO).toList();
+    try {
+      final dto = await repository.getAll();
+      return dto.map(DealershipEntity.fromDTO).toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 }

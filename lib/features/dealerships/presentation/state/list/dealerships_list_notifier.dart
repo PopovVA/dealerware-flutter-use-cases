@@ -1,59 +1,51 @@
 import 'package:flutter/foundation.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/delete_one_by_id.dart';
-import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/get_all.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/state/list/dealerships_list_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/di/dealerships_providers.dart';
 
 /// Notifier for managing dealerships list
-class DealershipsListNotifier extends ChangeNotifier {
-  final GetDealerships _getAllDealerships;
-  final DeleteOneByIdDealership _deleteDealership;
-
-  DealershipsListState _state = const DealershipsListInitial();
-
-  DealershipsListState get state => _state;
-
-  void _setState(DealershipsListState newState) {
-    _state = newState;
-    notifyListeners();
+class DealershipsListNotifier extends Notifier<DealershipsListState> {
+  @override
+  DealershipsListState build() {
+    return const DealershipsListInitial();
   }
-
-  DealershipsListNotifier({
-    required GetDealerships getAllDealerships,
-    required DeleteOneByIdDealership deleteDealership,
-  }) : _getAllDealerships = getAllDealerships,
-       _deleteDealership = deleteDealership;
 
   /// Load all dealerships
   Future<void> getAll() async {
-    _setState(const DealershipsListLoading());
+    state = const DealershipsListLoading();
 
     try {
-      final dealerships = await _getAllDealerships();
+      // Small delay to see loading state
+      await Future.delayed(const Duration(milliseconds: 800));
+
+      final dealerships = await ref.read(getDealershipsProvider).call();
 
       if (dealerships.isEmpty) {
-        _setState(const DealershipsListEmpty());
+        state = const DealershipsListEmpty();
       } else {
-        _setState(DealershipsListLoaded(dealerships));
+        state = DealershipsListLoaded(dealerships);
       }
     } catch (e, stackTrace) {
       debugPrint('Error loading dealerships: $e');
       debugPrint(stackTrace.toString());
-      _setState(DealershipsListError('Failed to load dealerships', e));
+      state = DealershipsListError('Failed to load dealerships', e);
     }
   }
 
   /// Delete a dealership by ID
   Future<void> deleteOneById(String id) async {
-    final currentState = _state;
+    final currentState = state;
 
     // Only allow deletion when we have data
     if (currentState is! DealershipsListLoaded) return;
 
     // Show deleting state
-    _setState(DealershipsListDeleting(currentState.dealerships, id));
+    state = DealershipsListDeleting(currentState.dealerships, id);
 
     try {
-      await _deleteDealership(DeleteOneByIdDealershipParams(id));
+      final deleteDealership = ref.read(deleteDealershipProvider);
+      await deleteDealership(DeleteOneByIdDealershipParams(id));
 
       // Remove from list and update state
       final updatedList = currentState.dealerships
@@ -61,16 +53,16 @@ class DealershipsListNotifier extends ChangeNotifier {
           .toList();
 
       if (updatedList.isEmpty) {
-        _setState(const DealershipsListEmpty());
+        state = const DealershipsListEmpty();
       } else {
-        _setState(DealershipsListLoaded(updatedList));
+        state = DealershipsListLoaded(updatedList);
       }
     } catch (e, stackTrace) {
       debugPrint('Error deleting dealership: $e');
       debugPrint(stackTrace.toString());
 
       // Restore previous state and show error
-      _setState(DealershipsListError('Failed to delete dealership', e));
+      state = DealershipsListError('Failed to delete dealership', e);
     }
   }
 
@@ -81,7 +73,7 @@ class DealershipsListNotifier extends ChangeNotifier {
 
   /// Check if specific dealership is being deleted
   bool isDeletingId(String id) {
-    final currentState = _state;
+    final currentState = state;
     if (currentState is DealershipsListDeleting) {
       return currentState.deletingId == id;
     }

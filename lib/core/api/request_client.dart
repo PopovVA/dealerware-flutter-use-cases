@@ -39,12 +39,16 @@ final class AppRequest<T> {
   /// Additional headers
   final Map<String, String>? headers;
 
+  /// Deserializer function to convert dynamic data to T
+  final T Function(dynamic data)? fromJson;
+
   const AppRequest({
     required this.type,
     required this.operation,
     this.params,
     this.query,
     this.headers,
+    this.fromJson,
   });
 
   /// Factory for REST requests
@@ -53,12 +57,14 @@ final class AppRequest<T> {
     required String endpoint,
     Map<String, dynamic>? params,
     Map<String, String>? headers,
+    T Function(dynamic data)? fromJson,
   }) {
     return AppRequest(
       type: RestRequest(method),
       operation: endpoint,
       params: params,
       headers: headers,
+      fromJson: fromJson,
     );
   }
 
@@ -69,6 +75,7 @@ final class AppRequest<T> {
     String? operationName,
     Map<String, dynamic>? variables,
     Map<String, String>? headers,
+    T Function(dynamic data)? fromJson,
   }) {
     return AppRequest(
       type: GraphQLRequest(operation),
@@ -76,6 +83,7 @@ final class AppRequest<T> {
       query: query,
       params: variables,
       headers: headers,
+      fromJson: fromJson,
     );
   }
 }

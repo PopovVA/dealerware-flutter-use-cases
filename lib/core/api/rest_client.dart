@@ -79,6 +79,10 @@ class RestClient extends RequestClient {
           break;
       }
 
+      // Use fromJson if provided, otherwise try direct cast
+      if (request.fromJson != null) {
+        return request.fromJson!(response.data);
+      }
       return response.data as T;
     } on DioException catch (e) {
       throw _handleDioError(e);

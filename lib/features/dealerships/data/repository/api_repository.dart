@@ -19,6 +19,8 @@ class ApiDealershipsRepository implements IDealershipsRepository {
         method: RestMethod.post,
         endpoint: '/dealerships',
         params: newDealership.toJson(),
+        fromJson: (data) =>
+            DealershipResponseDTO.fromJson(data as Map<String, dynamic>),
       );
       return await restClient.send<DealershipResponseDTO>(request);
     } catch (e) {
@@ -45,6 +47,8 @@ class ApiDealershipsRepository implements IDealershipsRepository {
       final request = AppRequest<DealershipResponseDTO>.rest(
         method: RestMethod.get,
         endpoint: '/dealerships/$id',
+        fromJson: (data) =>
+            DealershipResponseDTO.fromJson(data as Map<String, dynamic>),
       );
       return await restClient.send<DealershipResponseDTO>(request);
     } catch (e) {
@@ -58,8 +62,19 @@ class ApiDealershipsRepository implements IDealershipsRepository {
       final request = AppRequest<DealershipsDTO>.rest(
         method: RestMethod.get,
         endpoint: '/dealerships',
+        fromJson: (data) {
+          final list = data as List<dynamic>;
+          return list
+              .map(
+                (item) => DealershipResponseDTO.fromJson(
+                  item as Map<String, dynamic>,
+                ),
+              )
+              .toList();
+        },
       );
-      return await restClient.send<DealershipsDTO>(request);
+      final DealershipsDTO res = await restClient.send<DealershipsDTO>(request);
+      return res;
     } catch (e) {
       rethrow;
     }
@@ -74,6 +89,8 @@ class ApiDealershipsRepository implements IDealershipsRepository {
         method: RestMethod.put,
         endpoint: '/dealerships/${updatedDealership.id}',
         params: updatedDealership.toJson(),
+        fromJson: (data) =>
+            DealershipResponseDTO.fromJson(data as Map<String, dynamic>),
       );
       return await restClient.send<DealershipResponseDTO>(request);
     } catch (e) {
