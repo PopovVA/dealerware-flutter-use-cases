@@ -2,8 +2,8 @@ import 'package:intl/intl.dart';
 
 class DateFormatter {
   static String formatRelative(DateTime date, {DateTime? now}) {
-    final now = DateTime.now();
-    final difference = now.difference(date);
+    final currentTime = now ?? DateTime.now();
+    final difference = currentTime.difference(date);
 
     // If less than 1 day ago, show relative time
     if (difference.inDays == 0) {
