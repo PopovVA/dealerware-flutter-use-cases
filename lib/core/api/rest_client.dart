@@ -1,5 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'request_client.dart';
+
+final restClientProvider = Provider<RestClient>((ref) {
+  return RestClient(baseUrl: 'https://68f9578fdeff18f212b9499f.mockapi.io/');
+});
 
 class RestClient extends RequestClient {
   late final Dio _dio;
