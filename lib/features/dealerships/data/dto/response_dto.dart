@@ -1,7 +1,7 @@
 // ignore: file_names
 import 'package:json_annotation/json_annotation.dart';
 
-part 'dealership_dto.g.dart';
+part 'response_dto.g.dart';
 
 // {
 //   "createdAt": "2025-10-22T09:13:01.889Z",
@@ -12,8 +12,8 @@ part 'dealership_dto.g.dart';
 //   "id": "1"
 // }
 
-@JsonSerializable()
-class DealershipDTO {
+@JsonSerializable(createToJson: false, createFactory: true)
+class DealershipResponseDTO {
   final String id;
   final String name;
   final String address;
@@ -21,7 +21,7 @@ class DealershipDTO {
   final double longitude;
   final DateTime createdAt;
 
-  const DealershipDTO({
+  const DealershipResponseDTO({
     required this.id,
     required this.name,
     required this.address,
@@ -30,8 +30,6 @@ class DealershipDTO {
     required this.createdAt,
   });
 
-  factory DealershipDTO.fromJson(Map<String, dynamic> json) =>
-      _$DealershipDTOFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DealershipDTOToJson(this);
+  factory DealershipResponseDTO.fromJson(Map<String, dynamic> json) =>
+      _$DealershipResponseDTOFromJson(json);
 }

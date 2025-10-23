@@ -1,7 +1,7 @@
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/response_dto.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import 'package:dealerware_flutter_use_cases/core/utils/date_formatter.dart';
-import 'package:dealerware_flutter_use_cases/features/dealerships/data/dto/dealership_DTO.dart';
 
 /// Coordinates value object for UI convenience
 class CoordinatesEntity extends Equatable {
@@ -43,7 +43,7 @@ class DealershipEntity extends Equatable {
   });
 
   /// Create entity from DTO
-  factory DealershipEntity.fromDTO(DealershipDTO dto) {
+  factory DealershipEntity.fromDTO(DealershipResponseDTO dto) {
     return DealershipEntity(
       id: dto.id,
       name: dto.name,
