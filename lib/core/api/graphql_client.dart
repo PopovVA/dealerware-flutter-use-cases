@@ -1,4 +1,5 @@
 import 'package:graphql_flutter/graphql_flutter.dart' as gql;
+import 'api_exceptions.dart';
 import 'request_client.dart';
 
 class GraphQLClient extends RequestClient {
@@ -64,13 +65,15 @@ class GraphQLClient extends RequestClient {
 
       // Check for errors
       if (result.hasException) {
-        throw _handleGraphQLException(result.exception!);
+        throw _handleGraphQLException(result.exception!, StackTrace.current);
       }
 
       return result.data as T;
-    } catch (e) {
-      if (e is Exception) rethrow;
-      throw Exception('GraphQL request failed: $e');
+    } on ApiException {
+      rethrow;
+    } catch (e, stackTrace) {
+      // Unexpected error -> wrap in NetworkException
+      throw NetworkException(e, stackTrace);
     }
   }
 
@@ -99,33 +102,54 @@ class GraphQLClient extends RequestClient {
         )
         .map((result) {
           if (result.hasException) {
-            throw _handleGraphQLException(result.exception!);
+            throw _handleGraphQLException(
+              result.exception!,
+              StackTrace.current,
+            );
           }
           return result.data as T;
         });
   }
 
-  Exception _handleGraphQLException(gql.OperationException exception) {
+  /// Maps GraphQL OperationException to ApiException
+  ApiException _handleGraphQLException(
+    gql.OperationException exception,
+    StackTrace stackTrace,
+  ) {
     final errors = exception.graphqlErrors;
     final linkException = exception.linkException;
 
+    // GraphQL errors (validation, query errors, etc.)
     if (errors.isNotEmpty) {
       final errorMessages = errors.map((e) => e.message).join(', ');
-      return Exception('GraphQL errors: $errorMessages');
+      return ServerException(
+        null, // GraphQL errors don't have HTTP status codes
+        errorMessages,
+        exception,
+        stackTrace,
+      );
     }
 
+    // Network-level errors
     if (linkException != null) {
       if (linkException is gql.NetworkException) {
-        return Exception('Network error: ${linkException.message}');
+        return NetworkException(linkException, stackTrace);
       }
       if (linkException is gql.ServerException) {
-        return Exception(
-          'Server error: ${linkException.parsedResponse?.response}',
+        final statusCode = linkException.statusCode;
+        final responseData = linkException.parsedResponse?.response;
+        return ServerException(
+          statusCode,
+          responseData,
+          linkException,
+          stackTrace,
         );
       }
-      return Exception('Link error: ${linkException.toString()}');
+      // Other link errors -> treat as network errors
+      return NetworkException(linkException, stackTrace);
     }
 
-    return Exception('Unknown GraphQL error: ${exception.toString()}');
+    // Unknown error -> treat as network error
+    return NetworkException(exception, stackTrace);
   }
 }
