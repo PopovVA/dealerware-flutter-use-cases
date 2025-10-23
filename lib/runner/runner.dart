@@ -14,8 +14,8 @@ class Runner {
         runFlutterApp();
       },
       (error, stack) {
-        print(error);
-        print(stack);
+        debugPrint(error.toString());
+        debugPrint(stack.toString());
       },
     );
   }

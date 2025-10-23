@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:dealerware_flutter_use_cases/core/api/api_exceptions.dart';
 import 'package:dealerware_flutter_use_cases/core/api/rest_client.dart';
 import 'package:dealerware_flutter_use_cases/core/api/request_client.dart';
 
@@ -173,6 +174,77 @@ void main() {
           () =>
               mockDio.delete('/dealerships/1', options: any(named: 'options')),
         ).called(1);
+      });
+    });
+
+    group('Error Handling', () {
+      test('given network error (connection timeout), '
+          'when send is called, '
+          'then should throw NetworkException', () async {
+        // Arrange (Given)
+        when(
+          () => mockDio.get(
+            any(),
+            queryParameters: any(named: 'queryParameters'),
+            options: any(named: 'options'),
+          ),
+        ).thenThrow(
+          DioException(
+            requestOptions: RequestOptions(path: '/dealerships/1'),
+            type: DioExceptionType.connectionTimeout,
+          ),
+        );
+
+        final request = AppRequest<Map<String, dynamic>>.rest(
+          method: RestMethod.get,
+          endpoint: '/dealerships/1',
+        );
+
+        // Act & Assert (When & Then)
+        expect(
+          () => restClient.send(request),
+          throwsA(isA<NetworkException>()),
+        );
+      });
+
+      test('given server error 404, '
+          'when send is called, '
+          'then should throw ServerException with status code', () async {
+        // Arrange (Given)
+        final response = Response(
+          requestOptions: RequestOptions(path: '/dealerships/999'),
+          statusCode: 404,
+          data: 'Not found',
+        );
+
+        when(
+          () => mockDio.get(
+            any(),
+            queryParameters: any(named: 'queryParameters'),
+            options: any(named: 'options'),
+          ),
+        ).thenThrow(
+          DioException(
+            requestOptions: RequestOptions(path: '/dealerships/999'),
+            response: response,
+            type: DioExceptionType.badResponse,
+          ),
+        );
+
+        final request = AppRequest<Map<String, dynamic>>.rest(
+          method: RestMethod.get,
+          endpoint: '/dealerships/999',
+        );
+
+        // Act & Assert (When & Then)
+        expect(
+          () => restClient.send(request),
+          throwsA(
+            isA<ServerException>()
+                .having((e) => e.statusCode, 'statusCode', 404)
+                .having((e) => e.responseData, 'responseData', 'Not found'),
+          ),
+        );
       });
     });
   });

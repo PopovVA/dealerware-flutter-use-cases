@@ -350,10 +350,10 @@ class _DetailedDealershipPageState
             // Cancel button
             OutlinedButton(
               onPressed: isLoading ? null : () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
               ),
+              child: const Text('Cancel'),
             ),
 
             if (isEditMode) ...[

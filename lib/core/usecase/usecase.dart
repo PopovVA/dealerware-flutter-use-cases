@@ -3,13 +3,13 @@ import 'package:equatable/equatable.dart';
 /// Base interface for all use cases
 /// [Type] - return type
 /// [Params] - input parameters type
-abstract class IUseCase<Type, Params> {
-  Future<Type> call(Params params);
+abstract class IUseCase<T, Params> {
+  Future<T> call(Params params);
 }
 
 /// Use case without parameters
-abstract class IUseCaseNoParams<Type> {
-  Future<Type> call();
+abstract class IUseCaseNoParams<T> {
+  Future<T> call();
 }
 
 /// Base class for use case parameters

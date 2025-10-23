@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'api_exceptions.dart';
 import 'request_client.dart';
 
 final restClientProvider = Provider<RestClient>((ref) {
@@ -84,31 +85,23 @@ class RestClient extends RequestClient {
         return request.fromJson!(response.data);
       }
       return response.data as T;
-    } on DioException catch (e) {
-      throw _handleDioError(e);
+    } on DioException catch (e, stackTrace) {
+      throw _handleDioError(e, stackTrace);
     }
   }
 
-  Exception _handleDioError(DioException e) {
-    switch (e.type) {
-      case DioExceptionType.connectionTimeout:
-        return Exception('Connection timeout');
-      case DioExceptionType.sendTimeout:
-        return Exception('Send timeout');
-      case DioExceptionType.receiveTimeout:
-        return Exception('Receive timeout');
-      case DioExceptionType.badResponse:
-        return Exception(
-          'Request failed: ${e.response?.statusCode} ${e.response?.data}',
-        );
-      case DioExceptionType.cancel:
-        return Exception('Request cancelled');
-      case DioExceptionType.connectionError:
-        return Exception('Connection error: ${e.message}');
-      case DioExceptionType.badCertificate:
-        return Exception('Bad certificate');
-      case DioExceptionType.unknown:
-        return Exception('Unknown error: ${e.message}');
-    }
+  /// Maps DioException to ApiException
+  ApiException _handleDioError(DioException e, StackTrace stackTrace) {
+    return switch (e.type) {
+      // Server errors (bad response)
+      DioExceptionType.badResponse => ServerException(
+        e.response?.statusCode,
+        e.response?.data,
+        e,
+        stackTrace,
+      ),
+      // Network errors (all other types)
+      _ => NetworkException(e, stackTrace),
+    };
   }
 }

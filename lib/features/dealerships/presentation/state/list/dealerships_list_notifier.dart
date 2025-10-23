@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/domain/exceptions/dealership_exceptions.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/delete_one_by_id.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/state/list/dealerships_list_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,10 +26,15 @@ class DealershipsListNotifier extends Notifier<DealershipsListState> {
       } else {
         state = DealershipsListLoaded(dealerships);
       }
-    } catch (e, stackTrace) {
-      debugPrint('Error loading dealerships: $e');
-      debugPrint(stackTrace.toString());
-      state = DealershipsListError('Failed to load dealerships', e);
+    } on DealershipNetworkException catch (e) {
+      state = DealershipsListError(
+        'Network error. Please check your connection and try again',
+        e,
+      );
+    } on DealershipException catch (e) {
+      state = DealershipsListError(e.message, e);
+    } catch (e) {
+      state = DealershipsListError('Something went wrong. Please try again', e);
     }
   }
 
@@ -57,11 +62,16 @@ class DealershipsListNotifier extends Notifier<DealershipsListState> {
       } else {
         state = DealershipsListLoaded(updatedList);
       }
-    } catch (e, stackTrace) {
-      debugPrint('Error deleting dealership: $e');
-      debugPrint(stackTrace.toString());
-
-      // Restore previous state and show error
+    } on DealershipNotFoundException catch (e) {
+      state = DealershipsListError('Dealership not found', e);
+    } on DealershipNetworkException catch (e) {
+      state = DealershipsListError(
+        'Network error. Failed to delete dealership',
+        e,
+      );
+    } on DealershipException catch (e) {
+      state = DealershipsListError(e.message, e);
+    } catch (e) {
       state = DealershipsListError('Failed to delete dealership', e);
     }
   }

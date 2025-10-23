@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/domain/exceptions/dealership_exceptions.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/create.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/get_one_by_id.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/update.dart';
@@ -21,10 +21,17 @@ class DealershipDetailNotifier extends Notifier<DealershipDetailState> {
       final getDealershipById = ref.read(getDealershipByIdProvider);
       final dealership = await getDealershipById(GetOneByIdParams(id));
       state = DealershipDetailLoaded(dealership);
-    } catch (e, stackTrace) {
-      debugPrint('Error loading dealership: $e');
-      debugPrint(stackTrace.toString());
-      state = DealershipDetailError('Failed to load dealership', e);
+    } on DealershipNotFoundException catch (e) {
+      state = DealershipDetailError('Dealership not found', e);
+    } on DealershipNetworkException catch (e) {
+      state = DealershipDetailError(
+        'Network error. Please check your connection',
+        e,
+      );
+    } on DealershipException catch (e) {
+      state = DealershipDetailError(e.message, e);
+    } catch (e) {
+      state = DealershipDetailError('Something went wrong', e);
     }
   }
 
@@ -36,9 +43,14 @@ class DealershipDetailNotifier extends Notifier<DealershipDetailState> {
       final createDealership = ref.read(createDealershipProvider);
       final dealership = await createDealership(params);
       state = DealershipDetailCreated(dealership);
-    } catch (e, stackTrace) {
-      debugPrint('Error creating dealership: $e');
-      debugPrint(stackTrace.toString());
+    } on DealershipNetworkException catch (e) {
+      state = DealershipDetailError(
+        'Network error. Failed to create dealership',
+        e,
+      );
+    } on DealershipException catch (e) {
+      state = DealershipDetailError(e.message, e);
+    } catch (e) {
       state = DealershipDetailError('Failed to create dealership', e);
     }
   }
@@ -58,9 +70,16 @@ class DealershipDetailNotifier extends Notifier<DealershipDetailState> {
       final updateDealership = ref.read(updateDealershipProvider);
       final dealership = await updateDealership(params);
       state = DealershipDetailUpdated(dealership);
-    } catch (e, stackTrace) {
-      debugPrint('Error updating dealership: $e');
-      debugPrint(stackTrace.toString());
+    } on DealershipNotFoundException catch (e) {
+      state = DealershipDetailError('Dealership not found', e);
+    } on DealershipNetworkException catch (e) {
+      state = DealershipDetailError(
+        'Network error. Failed to update dealership',
+        e,
+      );
+    } on DealershipException catch (e) {
+      state = DealershipDetailError(e.message, e);
+    } catch (e) {
       state = DealershipDetailError('Failed to update dealership', e);
     }
   }
