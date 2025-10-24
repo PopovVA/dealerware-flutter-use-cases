@@ -2,10 +2,9 @@ name: dealerware_flutter_use_cases
 description: "Flutter demo: REST + GraphQL + WebSockets with CI/CD (Codemagic)."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-
-version: 1.0.0+7
+version: 1.0.0+10
 
 environment:
   sdk: ">=3.9.0 <4.0.0"
@@ -24,16 +23,15 @@ dependencies:
   dio: 5.9.0
   ## GraphQL
   graphql_flutter: 5.2.1
-  
+
   ## JSON
   json_annotation: 4.9.0
-  
+
   ## Date formatting
   intl: 0.19.0
-  
+
   ## Equality
   equatable: 2.0.5
-  
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +47,5 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   uses-material-design: true
-

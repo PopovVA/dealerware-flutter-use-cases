@@ -73,8 +73,7 @@ class ApiDealershipsRepository implements IDealershipsRepository {
               .toList();
         },
       );
-      final DealershipsDTO res = await restClient.send<DealershipsDTO>(request);
-      return res;
+      return await restClient.send<DealershipsDTO>(request);
     } catch (e) {
       rethrow;
     }

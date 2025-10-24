@@ -1,0 +1,48 @@
+targets:
+  $default:
+    builders:
+      # JSON Serializable
+      json_serializable:
+        enabled: true
+        options:
+          any_map: false
+          checked: false
+          create_to_json: true
+          disallow_unrecognized_keys: false
+          explicit_to_json: true
+          field_rename: none
+          generic_argument_factories: false
+          ignore_unannotated: false
+          include_if_null: true
+
+      # GraphQL CodeGen
+      graphql_codegen:
+        enabled: true
+        options:
+          # Schema location
+          schema: lib/core/graphql/schema.graphql
+
+          # Operations (queries, mutations, subscriptions)
+          queries_glob: lib/core/graphql/operations/*.graphql
+
+          # Output options
+          scalar_mapping:
+            - graphql_type: ID
+              dart_type: String
+            - graphql_type: DateTime
+              dart_type:
+                name: DateTime
+
+          # Naming conventions
+          type_name_suffix: "GQL"
+
+          # Generate options
+          generate_helpers: true
+
+          # Clients to generate
+          clients:
+            - graphql_flutter
+
+          # Additional options
+          add_query_prefix: false
+          replaceTypes: []

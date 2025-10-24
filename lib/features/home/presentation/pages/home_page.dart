@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/pages/dealerships_page.dart';
-import 'package:dealerware_flutter_use_cases/features/cars/presentation/pages/cars_page.dart';
-import 'package:dealerware_flutter_use_cases/features/profile/presentation/pages/profile_page.dart';
+import 'package:dealerware_flutter_use_cases/features/posts/presentation/pages/posts_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,11 +12,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
-    DealershipsPage(),
-    CarsPage(),
-    ProfilePage(),
-  ];
+  final List<Widget> _pages = const [DealershipsPage(), PostsListPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +30,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.store),
             label: 'Dealerships',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
-            label: 'Cars',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Posts'),
         ],
       ),
     );
