@@ -1,6 +1,11 @@
 import 'package:graphql_flutter/graphql_flutter.dart' as gql;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'api_exceptions.dart';
 import 'request_client.dart';
+
+final graphqlClientProvider = Provider<GraphQLClient>((ref) {
+  return GraphQLClient(baseUrl: 'https://graphqlzero.almansi.me/api');
+});
 
 class GraphQLClient extends RequestClient {
   late final gql.GraphQLClient _client;
