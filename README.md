@@ -1,15 +1,16 @@
 [![Codemagic build status](https://api.codemagic.io/apps/68f5642276e25aaf7e9940b6/68f5642276e25aaf7e9940b5/status_badge.svg)](https://codemagic.io/app/68f5642276e25aaf7e9940b6/68f5642276e25aaf7e9940b5/latest_build)
+[![Tests](https://github.com/vadimpopov/dealerware-flutter-use-cases/actions/workflows/tests.yml/badge.svg)](https://github.com/vadimpopov/dealerware-flutter-use-cases/actions/workflows/tests.yml)
 
 # Dealerware Flutter Use Cases
 
-A Flutter demo project showcasing **REST**, **GraphQL**, and **WebSocket** integrations with multiple CI/CD pipelines.
+A Flutter demo project showcasing **REST**, **GraphQL**, and **WebSocket** integrations with CI/CD pipelines.
 
 ## 🚀 Purpose
 
 This repository demonstrates how to build a scalable Flutter mobile application that integrates different data APIs (REST + GraphQL) and supports real-time communication via WebSockets.  
 It also includes three CI/CD configurations:
+
 - **GitHub Actions**
-- **Jenkins + Fastlane**
 - **Codemagic**
 
 The goal is to simulate realistic Dealerware-style use cases, focusing on fast iteration, strong architecture, and reliable delivery pipelines.
@@ -40,11 +41,19 @@ The goal is to simulate realistic Dealerware-style use cases, focusing on fast i
    flutter run
    ```
 
+## 🧪 Testing
+
+Run unit tests:
+
+```bash
+flutter test
+```
+
 ## 🧪 CI/CD
 
 Each pipeline automates build, test, and release:
-- **GitHub Actions**: cloud-based builds and releases.
-- **Jenkins + Fastlane**: local automation for Android/iOS.
+
+- **GitHub Actions**: run unit tests.
 - **Codemagic**: hosted mobile CI with automatic signing and publishing.
 
 ---
@@ -54,6 +63,5 @@ Each pipeline automates build, test, and release:
 Localization
 Naviigation
 Cache
-
 
 Created by Vadim Popov
