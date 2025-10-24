@@ -1,4 +1,7 @@
 import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/components/dealership_card.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/components/empty_state_widget.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/components/error_state_widget.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/components/loading_state_widget.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/pages/detailed_dealership_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -107,48 +110,16 @@ class _DealershipsPageState extends ConsumerState<DealershipsPage> {
 
   // Loading state
   Widget _buildLoadingState(BuildContext context) {
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 16),
-          Text('Loading dealerships...'),
-        ],
-      ),
-    );
+    return const LoadingStateWidget(message: 'Loading dealerships...');
   }
 
   // Empty state
   Widget _buildEmptyState(BuildContext context, dynamic notifier) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.inbox_outlined,
-            size: 100,
-            color: Theme.of(context).colorScheme.outline,
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'No Dealerships',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            'The list is empty. Add your first dealership!',
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton.icon(
-            onPressed: () => notifier.refresh(),
-            icon: const Icon(Icons.refresh),
-            label: const Text('Refresh'),
-          ),
-        ],
-      ),
+    return EmptyStateWidget(
+      title: 'No Dealerships',
+      subtitle: 'The list is empty. Add your first dealership!',
+      icon: Icons.inbox_outlined,
+      onRefresh: () => notifier.refresh(),
     );
   }
 
@@ -208,39 +179,9 @@ class _DealershipsPageState extends ConsumerState<DealershipsPage> {
     String message,
     dynamic notifier,
   ) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              size: 100,
-              color: Theme.of(context).colorScheme.error,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Error',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: Theme.of(context).colorScheme.error,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              message,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () => notifier.refresh(),
-              icon: const Icon(Icons.refresh),
-              label: const Text('Try Again'),
-            ),
-          ],
-        ),
-      ),
+    return ErrorStateWidget(
+      message: message,
+      onRetry: () => notifier.refresh(),
     );
   }
 
