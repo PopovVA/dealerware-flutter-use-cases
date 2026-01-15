@@ -35,9 +35,15 @@ class _DownloadingBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statusBarHeight = MediaQuery.of(context).padding.top;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.only(
+        top: statusBarHeight + 12,
+        bottom: 12,
+        left: 16,
+        right: 16,
+      ),
       color: Colors.blue.shade100,
       child: Row(
         children: [
@@ -87,9 +93,15 @@ class _ReadyBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statusBarHeight = MediaQuery.of(context).padding.top;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.only(
+        top: statusBarHeight + 12,
+        bottom: 12,
+        left: 16,
+        right: 16,
+      ),
       color: Colors.green.shade100,
       child: Row(
         children: [
