@@ -65,11 +65,7 @@ class RestClient extends RequestClient {
           break;
 
         case RestMethod.delete:
-          response = await _dio.delete(
-            endpoint,
-            options: Options(headers: request.headers),
-          );
-          break;
+          throw UnimplementedError('Delete method is not implemented');
 
         case RestMethod.patch:
           response = await _dio.patch(
