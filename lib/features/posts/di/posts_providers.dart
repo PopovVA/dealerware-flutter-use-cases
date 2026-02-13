@@ -1,6 +1,5 @@
-import 'package:dealerware_flutter_use_cases/core/api/graphql_client.dart';
-import 'package:dealerware_flutter_use_cases/features/posts/data/repository/graphql_posts_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:dealerware_flutter_use_cases/features/posts/data/repository/mock_posts_repository.dart';
 import 'package:dealerware_flutter_use_cases/features/posts/data/repository/posts_repository.dart';
 import 'package:dealerware_flutter_use_cases/features/posts/domain/usecases/create.dart';
 import 'package:dealerware_flutter_use_cases/features/posts/domain/usecases/delete_one_by_id.dart';
@@ -14,8 +13,7 @@ import 'package:dealerware_flutter_use_cases/features/posts/presentation/state/l
 
 /// Repository provider
 final postsRepositoryProvider = Provider<IPostsRepository>((ref) {
-  final graphqlClient = ref.read(graphqlClientProvider);
-  return GraphQLPostsRepository(graphqlClient: graphqlClient);
+  return MockPostsRepository();
 });
 
 /// Use Cases Providers

@@ -1,7 +1,6 @@
-import 'package:dealerware_flutter_use_cases/core/api/rest_client.dart';
-import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/api_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/dealerships_repository.dart';
+import 'package:dealerware_flutter_use_cases/features/dealerships/data/repository/mock_dealerships_repository.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/create.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/delete_one_by_id.dart';
 import 'package:dealerware_flutter_use_cases/features/dealerships/domain/usecases/get_all.dart';
@@ -14,8 +13,7 @@ import 'package:dealerware_flutter_use_cases/features/dealerships/presentation/s
 
 /// Repository provider
 final dealershipsRepositoryProvider = Provider<IDealershipsRepository>((ref) {
-  final restClient = ref.read(restClientProvider);
-  return ApiDealershipsRepository(restClient: restClient);
+  return MockDealershipsRepository();
 });
 
 /// Use Cases Providers
